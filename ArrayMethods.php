@@ -45,32 +45,40 @@ class ArrayMethods
     {
         $sortedArray = [];
  
-        $time = new TimeCounter();
-        $time->start();
+        if(count($array) == 1) {
+            $result = [
+                'array' => $array,
+                'duration' => 0,
+                'message' => 'Array is too short for sorting!'
+            ];
+        } else {
+            $time = new TimeCounter();
+            $time->start();
+   
+            switch ($method) {
+                case 'scalarBubble':
+                    $sortedArray = self::sortingBubbleScalar($array);
+                    break;
+                case 'scalarInsertion':
+                    $sortedArray = self::sortingInsertionScalar($array);
+                    break;
+                case 'scalarMerge':
+                    $sortedArray = self::sortingMergeScalar($array);
+                    break;
+                case 'scalarSelection':
+                    $sortedArray = self::sortingSelectionScalar($array);
+                    break;
+                default:
+                    throw new Exception('Method not found!');
+                    break;
+            }
 
-        switch ($method) {
-            case 'scalarBubble':
-                $sortedArray = self::sortingBubbleScalar($array);
-                break;
-            case 'scalarInsertion':
-                $sortedArray = self::sortingInsertionScalar($array);
-                break;
-            case 'scalarMerge':
-                $sortedArray = self::sortingMergeScalar($array);
-                break;
-            case 'scalarSelection':
-                $sortedArray = self::sortingSelectionScalar($array);
-                break;
-            default:
-                throw new Exception('Method not found!');
-                break;
+            $time->finish();
+            $result = [
+                'array' => $sortedArray,
+                'duration' => $time->duration,
+            ];
         }
-
-        $time->finish();
-        $result = [
-            'array' => $sortedArray,
-            'duration' => $time->duration,
-        ];
         return $result;
     }
 
