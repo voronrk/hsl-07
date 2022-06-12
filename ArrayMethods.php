@@ -19,7 +19,7 @@ class ArrayMethods
      * @param int $b
      * @return void
      */
-    public static function changeIntElements(int &$a, int &$b)
+    public static function swapIntElements(int &$a, int &$b)
     {
         $a = $a + $b;
         $b = $a - $b;
@@ -68,6 +68,9 @@ class ArrayMethods
                 case 'scalarSelection':
                     $sortedArray = self::sortingSelectionScalar($array);
                     break;
+                case 'scalarQuick':
+                    $sortedArray = self::sortingQuickScalar($array);
+                    break;
                 default:
                     throw new Exception('Method not found!');
                     break;
@@ -95,7 +98,7 @@ class ArrayMethods
             for($i=0; $i < $finishElementIndex-1; $i++) 
             {
                 if ($array[$i] > $array[$i+1]) {
-                    self::changeIntElements($array[$i], $array[$i+1]);
+                    self::swapIntElements($array[$i], $array[$i+1]);
                 }
             }
         } 
@@ -189,9 +192,40 @@ class ArrayMethods
                 }
             }
             if ($tailMinElementIndex != $lastHeadElementIndex) {
-                self::changeIntElements($array[$tailMinElementIndex], $array[$lastHeadElementIndex]);
+                self::swapIntElements($array[$tailMinElementIndex], $array[$lastHeadElementIndex]);
             }
         }
         return $array;
+    }
+
+    /**
+     * Quick sorting. Return sorted array by quick method.
+     *
+     * @param array $array
+     * @return array
+     */
+    public static function sortingQuickScalar(array $array): array
+    {
+        $sizeOfArray = count($array);
+        if ($sizeOfArray <= 1) {
+            return $array;
+        } else {
+            $pivot = $array[0];
+            $left_part = [];
+            $right_part = [];
+        
+            for ($i = 1; $i < $sizeOfArray; $i++) {
+                if ($array[$i] <= $pivot) {
+                    $left_part[] = $array[$i];
+                } else {
+                    $right_part[] = $array[$i];
+                }
+            }
+        
+            $left_part = self::sortingQuickScalar($left_part);
+            $right_part = self::sortingQuickScalar($right_part);
+        
+            return array_merge($left_part, array($pivot), $right_part);
+        }   
     }
 }

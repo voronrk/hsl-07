@@ -34,7 +34,7 @@ $array = generateDigitalArray(10);
 debug($array);
 
 try {
-    debug(ArrayMethods::sort($array, 'scalarMerge'));
+    debug(ArrayMethods::sort($array, 'scalarQuick'));
 } catch (Exception $e) {
     debug($e->getMessage());
 }
