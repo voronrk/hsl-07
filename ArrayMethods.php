@@ -23,17 +23,27 @@ class ArrayMethods
         $a = $a + $b;
         $b = $a - $b;
         $a = $a - $b;
+        return true;
     }
 
-    public static function insertElement(array &$array, int $key, $newElement)
+    /**
+     * Insert element to $key position to array
+     *
+     * @param array $array
+     * @param integer $key
+     * @param mixed $insertedElement
+     * @return void
+     */
+    public static function insertElement(array &$array, int $key, mixed $insertedElement)
     {
-        array_splice($array, $key, 0, $newElement);
+        array_splice($array, $key, 0, $insertedElement);
+        return true;
     }
 
     public static function sort(array $array, string $method): array
     {
         $sortedArray = [];
-
+ 
         $time = new TimeCounter();
         $time->start();
 
@@ -74,18 +84,35 @@ class ArrayMethods
         return $array;           
     }
 
+    /**
+     * Insertion sorter. Return sorted array by insertion method.
+     *
+     * @param array $array
+     * @return array
+     */
     public static function sortingInsertionScalar(array $array): array
     {
-        for($finishElementIndex = count($array); $finishElementIndex > 0; $finishElementIndex--)
-        {
-            for($i=0; $i < $finishElementIndex-1; $i++) 
-            {
-                if ($array[$i] > $array[$i+1]) {
-                    self::changeIntElements($array[$i], $array[$i+1]);
-                }
-            }
-        } 
-        return $array;           
+        $sortedArray = [$array[0]];
+
+        for($i = 1; $i < count($array); $i++) {
+            $currentElement = $array[$i];
+            $s = -1;
+            do {
+                $s++;
+            } while(($s < count($sortedArray)) && ($currentElement > $sortedArray[$s]));
+
+            if ($s == count($sortedArray) && ($currentElement > $sortedArray[$s-1])) {
+                $sortedArray[] = $currentElement;
+            } else {
+                self::insertElement($sortedArray, $s, $currentElement);
+            }            
+        }
+        return $sortedArray;           
+    }
+
+    public static function sortingMergeScalar(array $array): array
+    {
+        
     }
     
 }
