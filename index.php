@@ -1,10 +1,10 @@
 <?php
 
 require_once('TimeCounter.php');
-require_once('ArraySort.php');
+require_once('ArrayMethods.php');
 
 use TimeCounter\TimeCounter;
-use ArraySort\ArraySort;
+use ArrayMethods\ArrayMethods;
 
 function debug($data)
 {
@@ -32,5 +32,6 @@ function generateDigitalArray(int $size): array
 
 $array = generateDigitalArray(10);
 debug($array);
-debug(ArraySort::bubbleSort($array));
+
+debug(ArrayMethods::sort($array, 'scalarInsertion'));
 
