@@ -3,6 +3,7 @@
 namespace ArrayMethods;
 
 use TimeCounter\TimeCounter;
+use \Exception;
 
 class ArrayMethods
 {
@@ -56,6 +57,12 @@ class ArrayMethods
                 break;
             case 'scalarMerge':
                 $sortedArray = self::sortingMergeScalar($array);
+                break;
+            case 'scalarSelection':
+                $sortedArray = self::sortingSelectionScalar($array);
+                break;
+            default:
+                throw new Exception('Method not found!');
                 break;
         }
 
@@ -155,5 +162,28 @@ class ArrayMethods
         array_splice($result, count($result), 0, $leftPart);
         array_splice($result, count($result), 0, $rightPart);
         return $result;
+    }
+
+    /**
+     * Selection sorter. Return sorted array by selection method.
+     *
+     * @param array $array
+     * @return array
+     */
+    public static function sortingSelectionScalar(array $array): array
+    {
+        for($arrayIndex = 0; $arrayIndex < count($array); $arrayIndex++) {
+            $lastHeadElementIndex = $arrayIndex;
+            $tailMinElementIndex = $arrayIndex;
+            for($tailIndex = $arrayIndex; $tailIndex < count($array); $tailIndex++) {
+                if($array[$tailIndex] < $array[$tailMinElementIndex]) {
+                    $tailMinElementIndex = $tailIndex;
+                }
+            }
+            if ($tailMinElementIndex != $lastHeadElementIndex) {
+                self::changeIntElements($array[$tailMinElementIndex], $array[$lastHeadElementIndex]);
+            }
+        }
+        return $array;
     }
 }
