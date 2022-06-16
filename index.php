@@ -33,9 +33,18 @@ function generateDigitalArray(int $size): array
 $array = generateDigitalArray(10);
 debug($array);
 
-try {
-    debug(ArrayMethods::sort($array, 'scalarQuick'));
-} catch (Exception $e) {
-    debug($e->getMessage());
-}
+$methods = [
+    'scalarBubble',
+    'scalarInsertion',
+    'scalarMerge',
+    'scalarSelection',
+    'scalarQuick',
+];
 
+foreach($methods as $method) {
+    try {
+        debug(ArrayMethods::sort($array, $method));
+    } catch (Exception $e) {
+        debug($e->getMessage());
+    }
+}

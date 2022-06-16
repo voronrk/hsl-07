@@ -40,7 +40,15 @@ class ArrayMethods
         array_splice($array, $key, 0, $insertedElement);
         return true;
     }
-
+        
+    /**
+     * Base function for sorting
+     *
+     * @param array array
+     * @param string method
+     *
+     * @return array
+     */
     public static function sort(array $array, string $method): array
     {
         $sortedArray = [];
@@ -58,18 +66,23 @@ class ArrayMethods
             switch ($method) {
                 case 'scalarBubble':
                     $sortedArray = self::sortingBubbleScalar($array);
+                    $result['method'] = 'Bubble sorting';
                     break;
                 case 'scalarInsertion':
                     $sortedArray = self::sortingInsertionScalar($array);
+                    $result['method'] = 'Insertion sorting';
                     break;
                 case 'scalarMerge':
                     $sortedArray = self::sortingMergeScalar($array);
+                    $result['method'] = 'Merge sorting';
                     break;
                 case 'scalarSelection':
                     $sortedArray = self::sortingSelectionScalar($array);
+                    $result['method'] = 'Selection sorting';
                     break;
                 case 'scalarQuick':
                     $sortedArray = self::sortingQuickScalar($array);
+                    $result['method'] = 'Quick sorting';
                     break;
                 default:
                     throw new Exception('Method not found!');
@@ -77,10 +90,10 @@ class ArrayMethods
             }
 
             $time->finish();
-            $result = [
+            $result = array_merge($result, [
                 'array' => $sortedArray,
                 'duration' => $time->duration,
-            ];
+            ]);
         }
         return $result;
     }
