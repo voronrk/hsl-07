@@ -1,10 +1,10 @@
 <?php
 
 require_once('TimeCounter.php');
-require_once('ArrayMethods.php');
+require_once('ArraySort.php');
 
 use TimeCounter\TimeCounter;
-use ArrayMethods\ArrayMethods;
+use ArraySort\ArraySort;
 
 function debug($data)
 {
@@ -43,7 +43,7 @@ $methods = [
 
 foreach($methods as $method) {
     try {
-        debug(ArrayMethods::sort($array, $method));
+        debug(ArraySort::sort($array, $method));
     } catch (Exception $e) {
         debug($e->getMessage());
     }

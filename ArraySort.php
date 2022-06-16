@@ -1,11 +1,11 @@
 <?php
 
-namespace ArrayMethods;
+namespace ArraySort;
 
 use TimeCounter\TimeCounter;
 use \Exception;
 
-class ArrayMethods
+class ArraySort
 {
 
     /**
