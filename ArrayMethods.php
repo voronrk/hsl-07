@@ -7,9 +7,6 @@ use \Exception;
 
 class ArrayMethods
 {
-    private float $startTime;
-    private float $finishTime;
-    private float $diration;
 
     /**
      * This function change value of two integer variables.
