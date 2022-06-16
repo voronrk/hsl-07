@@ -2,9 +2,11 @@
 
 require_once('TimeCounter.php');
 require_once('ArraySort.php');
+require_once('ArraySearch.php');
 
 use TimeCounter\TimeCounter;
 use ArraySort\ArraySort;
+use ArraySearch\ArraySearch;
 
 function debug($data)
 {
@@ -30,21 +32,62 @@ function generateDigitalArray(int $size): array
     return $resultArray;
 }
 
-$array = generateDigitalArray(10);
-debug($array);
+/**
+ * Test sorting methods
+*/
+function searchTest() {
 
-$methods = [
-    'scalarBubble',
-    'scalarInsertion',
-    'scalarMerge',
-    'scalarSelection',
-    'scalarQuick',
-];
+    $array = generateDigitalArray(10);
+    debug($array);
 
-foreach($methods as $method) {
+    $methods = [
+        'scalarBubble',
+        'scalarInsertion',
+        'scalarMerge',
+        'scalarSelection',
+        'scalarQuick',
+    ];
+    
+    foreach($methods as $method) {
+        try {
+            debug(ArraySort::sort($array, $method));
+        } catch (Exception $e) {
+            debug($e->getMessage());
+        }
+    }
+}
+
+/**
+ * Test linear searching
+*/
+function linearSearchTest() {
+    $array = generateDigitalArray(100);
+    debug($array);
+
+    $needle = 256;
+    $needle = $array[34];
+
     try {
-        debug(ArraySort::sort($array, $method));
+        debug(ArraySearch::search($needle, $array, 'linear'));
     } catch (Exception $e) {
         debug($e->getMessage());
     }
 }
+
+/**
+ * Test linear searching
+*/
+function binarySearchTest() {
+    try {
+        $array = ArraySort::sort(generateDigitalArray(100), 'scalarBubble')['array'];
+        debug($array);
+
+        $needle = $array[93];
+        // $needle = 256;
+        
+        debug(ArraySearch::search($needle, $array, 'binary'));
+    } catch (Exception $e) {
+        debug($e->getMessage());
+    }
+}
+
