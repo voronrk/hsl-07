@@ -78,16 +78,37 @@ function linearSearchTest() {
  * Test linear searching
 */
 function binarySearchTest() {
-    try {
-        $array = ArraySort::sort(generateDigitalArray(100), 'scalarBubble')['array'];
-        debug($array);
 
-        $needle = $array[93];
-        // $needle = 256;
-        
+    $array = ArraySort::sort(generateDigitalArray(100), 'scalarBubble')['array'];
+    debug($array);
+
+    $needle = $array[93];
+    // $needle = 256;
+
+    try {        
         debug(ArraySearch::search($needle, $array, 'binary'));
     } catch (Exception $e) {
         debug($e->getMessage());
     }
 }
 
+function indexSearchTest() {
+    $array['value'] = ArraySort::sort(generateDigitalArray(100), 'scalarBubble')['array'];
+    $array['index'] = ArraySearch::createIndex($array['value']);
+    debug($array);
+
+    $needle = $array['value'][93];
+    // $needle = 256;
+
+    try {        
+        debug(ArraySearch::search($needle, $array, 'index'));
+    } catch (Exception $e) {
+        debug($e->getMessage());
+    }
+}
+
+// searchTest();
+
+// linearSearchTest();
+// binarySearchTest()
+indexSearchTest();

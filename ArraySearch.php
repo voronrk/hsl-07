@@ -7,6 +7,21 @@ use \Exception;
 
 class ArraySearch
 {
+    /**
+     * Generate index for array. The keys of index are hundrids of value of sourse array, the value of index contents keys of source array;
+     *
+     * @param array $array
+     * @return array
+     */
+    public static function createIndex(array $array): array
+    {
+        $indexArray = [];
+        foreach($array as $key => $item) {
+            $index = ceil($item / 100);
+            $indexArray[$index] = $key;
+        }
+        return $indexArray;
+    }
 
     /**
      * Base function for search
@@ -41,6 +56,12 @@ class ArraySearch
                     $result = [
                         'method' => 'Binary search',
                         'key' => self::binarySearch($needle, $array),
+                    ];
+                    break;
+                case 'index':
+                    $result = [
+                        'method' => 'Index search',
+                        'key' => self::indexSearch($needle, $array['value'], $array['index']),
                     ];
                     break;
                 default:
@@ -104,6 +125,30 @@ class ArraySearch
                 }
             }
         }
+        return $resultKey;           
+    }
+
+    /**
+     * Indexed search. Return first key of found element or -1 if element not found
+     *
+     * @param mixed $needle
+     * @param array $array
+     * @param array $indexArray
+     * @return array
+     */
+    public static function indexSearch(mixed $needle, array $array, array $indexArray): string
+    {
+        $resultKey = '-1';
+
+        $keyBegin = $indexArray[floor($needle / 100)];
+        $keyEnd = $indexArray[ceil($needle / 100)];
+
+        for($i = $keyBegin; $i<=$keyEnd; $i++) {
+            if($array[$i] == $needle) {
+                $resultKey = $i;
+                break;
+            }
+        }        
         return $resultKey;           
     }
 
