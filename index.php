@@ -35,7 +35,7 @@ function generateDigitalArray(int $size): array
 /**
  * Test sorting methods
 */
-function searchTest() {
+function sortTest() {
 
     $array = generateDigitalArray(10);
     debug($array);
@@ -107,7 +107,7 @@ function indexSearchTest() {
     }
 }
 
-// searchTest();
+// sortTest();
 
 // linearSearchTest();
 // binarySearchTest()
